@@ -36,17 +36,31 @@
 代码块
 
 ```python
-print("Hello World!");
+print("Hello World!")
 
+def add(a, b):
+    return a+b
 ```
 
 内联代码 `{code:0}`
 
 ### 列表
 
+渲染成`<li>`
+
+其实有`<ul><ul>`和`<ol><ol>`之间的`<li>`区别，但是我
+没想好怎么处理，暂时在CSS里都用`<li>`控制。
+
+
 - 第一项(`<li>`)
 - 第二项(`<li>`)
 - 第三项(`<li>`)
+
+<br>
+
+1. banana
+2. apple
+2. pear
 
 ### 表格
 `<table>`, `<tr>`, `<td>`, `<th>` 
