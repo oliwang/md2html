@@ -31,7 +31,7 @@ html, body {
     width: 100%;
     padding: 10px;
 }
-section {
+section.el-container {
     height: 100%;
 }
 .main-body {
