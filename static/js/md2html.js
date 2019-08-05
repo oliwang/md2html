@@ -25,7 +25,6 @@ var app = new Vue({
     },
     mounted: function () {
         let max_height = $(".main-section .el-col").height();
-        console.log(max_height);
         $("#output").attr("style","height:" + (max_height-30-10-30) + "px;");
 
         var self = this;
@@ -53,18 +52,16 @@ var app = new Vue({
         });
         axios({
             method: 'get',
-            url: 'https://raw.githubusercontent.com/oliwang/tampermonkey_scripts/master/README.md'
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-md.md?token=ABIJUOZKRLNX5RZLQSYQH7K5KFP72'
         }).then(function (resp) {
             self.md_editor.setValue(resp.data)
         });
-        // axios({
-        //     method: 'get',
-        //     url: '../default-css.css'
-        // }).then(function (resp) {
-        //     self.css_editor.setValue(resp.data)
-        // });
-        // self.md_editor.setValue("# This is the title\n## This is also a title\nContent");
-        self.css_editor.setValue("h1{color:blue;}\n p{font-size:14px;}\nli {background:#444444;}");
+        axios({
+            method: 'get',
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-css.css?token=ABIJUO6IJ3X4Q6ZFFU4TALS5KFP6G'
+        }).then(function (resp) {
+            self.css_editor.setValue(resp.data)
+        });
 
 
     },
@@ -110,11 +107,11 @@ var app = new Vue({
                 }));
             this.converter = new showdown.Converter({
                 extensions: [...bindings],
-                noHeaderId: true // important to add this, else regex match doesn't work
+                noHeaderId: true, // important to add this, else regex match doesn't work
+                // simpleLineBreaks: true
             });
 
             var html = this.converter.makeHtml(this.md_editor.getValue());
-            console.log(html);
             var css_style = "<style>" + this.css_editor.getValue() + "</style>";
             this.output = css_style+html;
         },
