@@ -34,10 +34,7 @@ var app = new Vue({
         }
 
 
-        let max_height = $(".main-section .el-col").height();
-        alert(max_height);
-        alert(max_height-30-10-30);
-        $("#output").attr("style","height:" + (max_height-30-10-30) + "px;");
+
 
         let self = this;
         self.md_editor = CodeMirror.fromTextArea(document.querySelector("#md_editor"), {
@@ -74,6 +71,11 @@ var app = new Vue({
         }).then(function (resp) {
             self.css_editor.setValue(resp.data)
         });
+
+        let max_height = $(".main-section .el-col").height();
+        // alert(max_height);
+        // alert(max_height-30-10-30);
+        $("#output").attr("style","height:" + (max_height-30-10-30) + "px;");
 
 
     },
