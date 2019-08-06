@@ -18,6 +18,7 @@ p {
 ```
 
 ## Markdown 语法
+下面只列了一些基本语法，更多语法请参考[showdown.js](https://github.com/showdownjs/showdown)
 
 ### 标题
 
