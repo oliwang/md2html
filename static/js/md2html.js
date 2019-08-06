@@ -62,13 +62,13 @@ var app = new Vue({
         });
         axios({
             method: 'get',
-            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-md.md?token=ABIJUO3GDFDPEVEXKPLUXBK5KJNG2'
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-md.md'
         }).then(function (resp) {
             self.md_editor.setValue(resp.data)
         });
         axios({
             method: 'get',
-            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-css.css?token=ABIJUO2RSDMEREVYQBYXXSS5KJNDO'
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-css.css'
         }).then(function (resp) {
             self.css_editor.setValue(resp.data)
         });
