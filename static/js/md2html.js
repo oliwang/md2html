@@ -22,14 +22,22 @@ var app = new Vue({
         output:null,
         converter:new showdown.Converter(),
         reference_list: [],
-        reference_index: 0
+        reference_index: 0,
+        browser_type: null
 
     },
     mounted: function () {
+        let explorer = window.navigator.userAgent ;
+
+        if(explorer.indexOf("Chrome") >= 0){
+            this.browser_type = 'Chrome';
+        }
+
+
         let max_height = $(".main-section .el-col").height();
         $("#output").attr("style","height:" + (max_height-30-10-30) + "px;");
 
-        var self = this;
+        let self = this;
         self.md_editor = CodeMirror.fromTextArea(document.querySelector("#md_editor"), {
             lineNumbers: false,
             lineWrapping: true,
@@ -54,13 +62,13 @@ var app = new Vue({
         });
         axios({
             method: 'get',
-            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-md.md'
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-md.md?token=ABIJUO3GDFDPEVEXKPLUXBK5KJNG2'
         }).then(function (resp) {
             self.md_editor.setValue(resp.data)
         });
         axios({
             method: 'get',
-            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-css.css'
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-css.css?token=ABIJUO2RSDMEREVYQBYXXSS5KJNDO'
         }).then(function (resp) {
             self.css_editor.setValue(resp.data)
         });
@@ -76,8 +84,8 @@ var app = new Vue({
             this.exportFile("css");
         },
         exportFile:function(file_type){
-            var editor_content = null;
-            var filename = null;
+            let editor_content = null;
+            let filename = null;
             if (file_type === "md"){
                 editor_content = this.md_editor.getValue();
                 filename = "md2html.md";
@@ -106,17 +114,31 @@ var app = new Vue({
             const self = this;
 
             const link = {
-                type: "lang",
-                regex: /(?<!\!)\[([^\[\]]+)\]\(([^)]+)\)/gm,
-                replace: function(d, link_name, link_href) {
+                type: "output",
+                regex: /<a href="([^"]+?)">([^<]+?)<\/a>/g,
+                replace: function(d, link_href, link_name) {
                     self.reference_index += 1;
                     let r = '[' + self.reference_index + '] ' + link_name + ':<br>' + link_href;
                     self.reference_list.push(r);
                     let $replace_ele = $('<span>'+ link_name+'<sup>['+ self.reference_index + ']</sup></span>');
                     return $replace_ele[0].outerHTML;
+
                 }
 
             };
+
+            // const link = {
+            //     type: "lang",
+            //     regex: /(?<!\!)\[([^\[\]]+)\]\(([^)]+)\)/gm,
+            //     replace: function(d, link_name, link_href) {
+            //         self.reference_index += 1;
+            //         let r = '[' + self.reference_index + '] ' + link_name + ':<br>' + link_href;
+            //         self.reference_list.push(r);
+            //         let $replace_ele = $('<span>'+ link_name+'<sup>['+ self.reference_index + ']</sup></span>');
+            //         return $replace_ele[0].outerHTML;
+            //     }
+            //
+            // };
 
             const bindings = Object.keys(styleMap)
                 .map(key => ({
@@ -174,16 +196,19 @@ var app = new Vue({
             };
 
             this.converter = new showdown.Converter({
-                extensions: [...bindings, codeblock, link],
+                extensions: [link, ...bindings, codeblock],
                 noHeaderId: true, // important to add this, else regex match doesn't work
                 // simpleLineBreaks: true
                 tables:true
             });
 
+
+
             let html = this.converter.makeHtml(this.md_editor.getValue());
 
             if (this.reference_index > 0) {
-                let reference = '## References';
+                // let reference = '## References';
+                let reference = '';
 
                 for(let i = 0; i < this.reference_list.length; i++) {
                     reference += ("\n" + this.reference_list[i] + "\n");
@@ -242,13 +267,6 @@ var app = new Vue({
 });
 
 $(document).ready(function(){
-    var explorer = window.navigator.userAgent ;
 
-    var browser = null;
-    if(explorer.indexOf("Chrome") >= 0){
-        browser =  'Chrome';
-    } else {
-        alert("请用Chrome浏览器");
-    }
 
 });
