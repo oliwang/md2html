@@ -8,6 +8,14 @@
 
 更多内容请关注 **「伪装程序大佬」**
 
+## CSS
+请用**单引号**,如
+```css
+p {
+    font-family: 'PingFang SC';
+}
+
+```
 
 ## Markdown 语法
 
@@ -74,4 +82,6 @@ def add(a, b):
 | Key 2 | Value 2 |
 | Key 3 | Value 3 |
 
+### 链接
+[showdown.js](https://github.com/showdownjs/showdown)
 
