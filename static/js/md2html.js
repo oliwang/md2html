@@ -54,13 +54,13 @@ var app = new Vue({
         });
         axios({
             method: 'get',
-            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-md.md?token=ABIJUOZKRLNX5RZLQSYQH7K5KFP72'
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-md.md'
         }).then(function (resp) {
             self.md_editor.setValue(resp.data)
         });
         axios({
             method: 'get',
-            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-css.css?token=ABIJUO6IJ3X4Q6ZFFU4TALS5KFP6G'
+            url: 'https://raw.githubusercontent.com/oliwang/md2html/master/static/default-css.css'
         }).then(function (resp) {
             self.css_editor.setValue(resp.data)
         });
@@ -242,5 +242,13 @@ var app = new Vue({
 });
 
 $(document).ready(function(){
+    var explorer = window.navigator.userAgent ;
+
+    var browser = null;
+    if(explorer.indexOf("Chrome") >= 0){
+        browser =  'Chrome';
+    } else {
+        alert("请用Chrome浏览器");
+    }
 
 });
