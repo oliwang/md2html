@@ -130,16 +130,20 @@ var app = new Vue({
                     var $pre = $('<pre class="code-snippet__js" data-lang="' +language_str+'"></pre>');
 
                     for(let i=0; i < code_content_list.length; i++) {
-                        const $li = $('<li></li>');
-                        var str = "<br>";
-                        if(code_content_list[i] !== ""){
-                            str = code_content_list[i];
+                        if(!(i === code_content_list.length - 1 && code_content_list[i] === "")) {
+                            const $li = $('<li></li>');
+                            var str = "<br>";
+                            if(code_content_list[i] !== ""){
+                                str = code_content_list[i];
+
+                            }
+                            const $span = $('<code><span class="code-snippet_outer">'+ str +'</span></code>');
+
+                            $ul.append($li);
+                            $pre.append($span);
 
                         }
-                        const $span = $('<code><span class="code-snippet_outer">'+ str +'</span></code>');
 
-                        $ul.append($li);
-                        $pre.append($span);
                     }
 
                     $section.append($ul);

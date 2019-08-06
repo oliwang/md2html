@@ -25,14 +25,19 @@ p{
 }
 
 strong{
-    color:#50c8a9;
+    color: #Fab419;
 }
 
 code {
-    color:#50c8a9;
+    color:#035095;
+    background:#f8f8ff;
 }
 
 li {
     font-size:14px;
     color:#595757;
+}
+
+span {
+    color:#004d9a;
 }
