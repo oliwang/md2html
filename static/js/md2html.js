@@ -75,10 +75,10 @@ var app = new Vue({
 
     },
     updated: function(){
-        // let max_height = $(".main-section .el-col").height();
-        // alert(max_height);
+        let max_height = $(".main-section .el-col").height();
+        console.log(max_height);
         // alert(max_height-30-10-30);
-        // $(".preview-wrapper").attr("style","height:" + (max_height) + "px;");
+        $(".preview-wrapper").attr("style","height:" + (max_height) + "px;");
 
     },
     methods: {
