@@ -16,6 +16,7 @@ html, body {
     margin: 30px auto;
     /*border-style: solid;*/
     /*border-color: #d1fff4;*/
+    overflow:scroll;
 }
 
 .about {
@@ -30,7 +31,7 @@ html, body {
 
 .logo{
     font-weight: bolder;
-    font-size: 24px;
+    font-size: 1em;
 
 }
 
