@@ -84,5 +84,6 @@ def add(a, b):
 | Key 3 | Value 3 |
 
 ### 链接
+链接会加上角标，具体网页地址会在最后加上一个Reference部分
 [showdown.js](https://github.com/showdownjs/showdown)
 

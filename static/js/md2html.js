@@ -20,7 +20,9 @@ var app = new Vue({
         md_source:'',
         css_source:'',
         output:null,
-        converter:new showdown.Converter()
+        converter:new showdown.Converter(),
+        reference_list: [],
+        reference_index: 0
 
     },
     mounted: function () {
@@ -99,6 +101,23 @@ var app = new Vue({
         },
         refresh: function () {
             const styleMap = this.generate_style_map();
+            this.reference_list = [];
+            this.reference_index = 0;
+            const self = this;
+
+            const link = {
+                type: "lang",
+                regex: /(?<!\!)\[([^\[\]]+)\]\(([^)]+)\)/gm,
+                replace: function(d, link_name, link_href) {
+                    self.reference_index += 1;
+                    let r = '[' + self.reference_index + '] ' + link_name + ':<br>' + link_href;
+                    self.reference_list.push(r);
+                    let $replace_ele = $('<span>'+ link_name+'<sup>['+ self.reference_index + ']</sup></span>');
+                    return $replace_ele[0].outerHTML;
+                }
+
+            };
+
             const bindings = Object.keys(styleMap)
                 .map(key => ({
                     type: 'output',
@@ -109,7 +128,7 @@ var app = new Vue({
 
             const codeblock = {
                 type: 'output',
-                regex: /<pre>\s*<code class=\"([\w\-]+\s*[\w\-]*)\">\s*([\w\s\W]+)<\/code>\s*<\/pre>/g,
+                regex: /<pre>\s*<code class=\"([\w\-]+\s*[\w\-]*)\">\s*([\w\s\W]+?)<\/code>\s*<\/pre>/gm,
                 replace: function(d, language_name, code_content){
                     code_content = code_content.replace(/</g, "&lt;");
                     code_content = code_content.replace(/>/g, "&gt;");
@@ -155,15 +174,27 @@ var app = new Vue({
             };
 
             this.converter = new showdown.Converter({
-                extensions: [...bindings, codeblock],
+                extensions: [...bindings, codeblock, link],
                 noHeaderId: true, // important to add this, else regex match doesn't work
                 // simpleLineBreaks: true
                 tables:true
             });
 
-            var html = this.converter.makeHtml(this.md_editor.getValue());
+            let html = this.converter.makeHtml(this.md_editor.getValue());
+
+            if (this.reference_index > 0) {
+                let reference = '## References';
+
+                for(let i = 0; i < this.reference_list.length; i++) {
+                    reference += ("\n" + this.reference_list[i] + "\n");
+                }
+
+                this.output = html + this.converter.makeHtml(reference);
+
+            } else {
+                this.output = html;
+            }
             // var css_style = "<style>" + this.css_editor.getValue() + "</style>";
-            this.output = html;
         },
         copy: function() {
             var clipboardDiv = document.getElementById('output');
