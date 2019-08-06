@@ -34,13 +34,13 @@ An online tool to convert markdown to html
 - 可以下载保存修改后的markdown和css文件
 - 一键复制
 
-## 用到的库
- - Vue
- - Element-UI
- - showdown.js
- - axios.js
- - jquery
- - CodeMirror
+## Built with
+ - [Vue](https://cn.vuejs.org/index.html)
+ - [Element-UI](https://element.eleme.cn/#)
+ - [showdown.js](https://github.com/showdownjs/showdown)
+ - [axios.js](https://github.com/axios/axios)
+ - [jquery](https://jquery.com)
+ - [CodeMirror](https://codemirror.net)
  
 ## 目前的一些问题
 1. 加载时间实在太长
