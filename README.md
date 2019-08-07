@@ -43,7 +43,7 @@ An online tool to convert markdown to html
  - [CodeMirror](https://codemirror.net)
  
 ## 目前的一些问题
-1. 加载时间实在太长
+1. ~~加载时间实在太长~~(用CDN基本解决了这个问题)
 2. 在iOS上不知道为什么没办法输入中文 (是codemirror的一个bug，没想好怎么处理)
 3. 在Android设备上可以输入中文但是渲染有点问题
 3. scroll时灵时不灵
